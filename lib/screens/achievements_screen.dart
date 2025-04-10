@@ -1,19 +1,51 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
+import '../theme/pirate_theme.dart';
+import '../theme/pixel_icons.dart';
 
-class AchievementsScreen extends StatelessWidget {
+class AchievementsScreen extends StatefulWidget {
   const AchievementsScreen({super.key});
 
+  @override
+  State<AchievementsScreen> createState() => _AchievementsScreenState();
+}
+
+class _AchievementsScreenState extends State<AchievementsScreen> with SingleTickerProviderStateMixin {
   // Placeholder values
   final int currentStreak = 7; // 7 days streak
   final int longestStreak = 14; // 14 days longest streak
-  final List<bool> lastWeekActivity = [true, true, true, false, true, true, true]; // Last 7 days activity
+  final List<bool> lastWeekActivity = const [true, true, true, false, true, true, true]; // Last 7 days activity
+  
+  late AnimationController _coinAnimationController;
+  late Animation<double> _coinAnimation;
+  
+  @override
+  void initState() {
+    super.initState();
+    
+    // Initialize animations
+    _coinAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat(reverse: true);
+    
+    _coinAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _coinAnimationController, curve: Curves.easeInOut)
+    );
+  }
+  
+  @override
+  void dispose() {
+    _coinAnimationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Achievements'),
-        centerTitle: false,
+        title: const Text('TREASURE'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -28,8 +60,8 @@ class AchievementsScreen extends StatelessWidget {
             
             // Achievement Categories
             Text(
-              'My Achievements',
-              style: Theme.of(context).textTheme.titleLarge,
+              'MY TREASURE CHEST',
+              style: PirateTheme.pixelTextHeadline,
             ),
             const SizedBox(height: 16),
             
@@ -43,34 +75,34 @@ class AchievementsScreen extends StatelessWidget {
               children: [
                 _buildAchievementCategory(
                   context, 
-                  'Investing', 
-                  Icons.trending_up, 
-                  Colors.green.shade100, 
-                  Colors.green,
+                  'INVESTING', 
+                  'treasures', 
+                  PirateTheme.woodBrown, 
+                  PirateTheme.goldYellow,
                   '3/8'
                 ),
                 _buildAchievementCategory(
                   context, 
-                  'Saving', 
-                  Icons.savings, 
-                  Colors.blue.shade100, 
-                  Colors.blue,
+                  'SAVING', 
+                  'coins', 
+                  PirateTheme.woodBrown, 
+                  PirateTheme.goldYellow,
                   '2/5'
                 ),
                 _buildAchievementCategory(
                   context, 
-                  'Budgeting', 
-                  Icons.account_balance_wallet, 
-                  Colors.orange.shade100, 
-                  Colors.orange,
+                  'BUDGETING', 
+                  'map', 
+                  PirateTheme.woodBrown, 
+                  PirateTheme.goldYellow,
                   '4/6'
                 ),
                 _buildAchievementCategory(
                   context, 
-                  'Debt Management', 
-                  Icons.credit_card, 
-                  Colors.red.shade100, 
-                  Colors.red,
+                  'DEBT', 
+                  'ship', 
+                  PirateTheme.woodBrown, 
+                  PirateTheme.goldYellow,
                   '1/7'
                 ),
               ],
@@ -80,38 +112,38 @@ class AchievementsScreen extends StatelessWidget {
             
             // Recent Achievements
             Text(
-              'Recent Achievements',
-              style: Theme.of(context).textTheme.titleLarge,
+              'RECENT LOOT',
+              style: PirateTheme.pixelTextHeadline,
             ),
             const SizedBox(height: 16),
             
             _buildRecentAchievement(
               context,
-              'First Steps',
+              'FIRST VOYAGE',
               'Completed your first financial lesson',
-              Icons.school,
-              Colors.green,
-              '100 points',
+              'treasures',
+              PirateTheme.goldYellow,
+              '100 COINS',
               DateTime.now().subtract(const Duration(days: 7)),
             ),
             
             _buildRecentAchievement(
               context,
-              'On a Roll',
+              'STEADY SAILING',
               'Logged in for 5 consecutive days',
-              Icons.local_fire_department,
-              Colors.orange,
-              '250 points',
+              'ship',
+              PirateTheme.goldYellow,
+              '250 COINS',
               DateTime.now().subtract(const Duration(days: 2)),
             ),
             
             _buildRecentAchievement(
               context,
-              'Budget Master',
+              'TREASURE MAPPER',
               'Created your first monthly budget',
-              Icons.check_circle,
-              Colors.blue,
-              '500 points',
+              'map',
+              PirateTheme.goldYellow,
+              '500 COINS',
               DateTime.now().subtract(const Duration(days: 1)),
             ),
           ],
@@ -124,18 +156,18 @@ class AchievementsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+        color: PirateTheme.woodBrown,
+        border: Border.all(
+          color: PirateTheme.darkBrown,
+          width: 2,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.zero,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 0,
             spreadRadius: 2,
-            offset: const Offset(0, 3),
+            offset: const Offset(4, 4),
           ),
         ],
       ),
@@ -144,49 +176,40 @@ class AchievementsScreen extends StatelessWidget {
           // Streak header
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.local_fire_department,
-                  color: Colors.white,
-                  size: 28,
+              SizedBox(
+                width: 48,
+                height: 48,
+                child: PixelIcons.treasureChest(
+                  color: PirateTheme.goldYellow,
+                  size: 48,
                 ),
               ),
               const SizedBox(width: 16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Current Streak',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                  Text(
+                    'TREASURE STREAK',
+                    style: PirateTheme.pixelTextBody.copyWith(
+                      color: PirateTheme.goldYellow,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
                         '$currentStreak',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
+                        style: PirateTheme.pixelTextHeadline.copyWith(
+                          fontSize: 18,
                         ),
                       ),
                       const SizedBox(width: 4),
-                      const Text(
-                        'days',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
+                      Text(
+                        'DAYS',
+                        style: PirateTheme.pixelTextSmall.copyWith(
+                          color: PirateTheme.goldYellow,
                         ),
                       ),
                     ],
@@ -197,20 +220,17 @@ class AchievementsScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text(
-                    'Longest Streak',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
+                  Text(
+                    'BEST VOYAGE',
+                    style: PirateTheme.pixelTextSmall.copyWith(
+                      color: PirateTheme.sandBeige,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   Text(
-                    '$longestStreak days',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                    '$longestStreak DAYS',
+                    style: PirateTheme.pixelTextBody.copyWith(
+                      color: PirateTheme.goldYellow,
                     ),
                   ),
                 ],
@@ -224,12 +244,10 @@ class AchievementsScreen extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Last 7 Days',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+              Text(
+                'LAST 7 DAYS',
+                style: PirateTheme.pixelTextSmall.copyWith(
+                  color: PirateTheme.sandBeige,
                 ),
               ),
               const SizedBox(height: 12),
@@ -253,24 +271,28 @@ class AchievementsScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white.withOpacity(0.2)),
+              color: PirateTheme.oceanDarkBlue.withOpacity(0.3),
+              border: Border.all(
+                color: PirateTheme.oceanBlue,
+                width: 2,
+              ),
             ),
             child: Row(
               children: [
-                const Icon(
-                  Icons.lightbulb,
-                  color: Colors.amberAccent,
-                  size: 24,
+                SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: PixelIcons.parrot(
+                    color: PirateTheme.parrotGreen,
+                    size: 24,
+                  ),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Keep your streak going! 10 consecutive days unlocks the "Consistent Learner" badge.',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
+                    'SQUAWK! KEEP YER STREAK GOIN\' FOR 10 DAYS TO EARN THE "LOYAL CREW" BADGE! SQUAWK!',
+                    style: PirateTheme.pixelTextSmall.copyWith(
+                      color: PirateTheme.pixelWhite,
                     ),
                   ),
                 ),
@@ -290,20 +312,23 @@ class AchievementsScreen extends StatelessWidget {
           height: 36,
           decoration: BoxDecoration(
             color: completed 
-                ? Colors.white 
-                : Colors.white.withOpacity(0.1),
-            shape: BoxShape.circle,
+                ? PirateTheme.goldYellow 
+                : PirateTheme.oceanDarkBlue.withOpacity(0.3),
+            shape: BoxShape.rectangle,
             border: Border.all(
-              color: Colors.white.withOpacity(0.3),
+              color: PirateTheme.darkBrown,
               width: 2,
             ),
           ),
           child: Center(
             child: completed
-                ? const Icon(
-                    Icons.check,
-                    color: Color(0xFF6A11CB),
-                    size: 20,
+                ? SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: PixelIcons.coin(
+                      color: PirateTheme.darkBrown,
+                      size: 20,
+                    ),
                   )
                 : null,
           ),
@@ -311,11 +336,10 @@ class AchievementsScreen extends StatelessWidget {
         const SizedBox(height: 6),
         Text(
           day,
-          style: TextStyle(
+          style: PirateTheme.pixelTextSmall.copyWith(
             color: completed 
-                ? Colors.white 
-                : Colors.white.withOpacity(0.6),
-            fontSize: 12,
+                ? PirateTheme.goldYellow 
+                : PirateTheme.sandBeige.withOpacity(0.6),
           ),
         ),
       ],
@@ -332,15 +356,46 @@ class AchievementsScreen extends StatelessWidget {
   Widget _buildAchievementCategory(
     BuildContext context, 
     String title, 
-    IconData icon, 
+    String iconType, 
     Color backgroundColor, 
     Color iconColor,
     String progress,
   ) {
+    Widget iconWidget;
+    
+    // Choose the appropriate pixel icon based on the iconType
+    switch (iconType) {
+      case 'treasures':
+        iconWidget = PixelIcons.treasureChest(color: iconColor, size: 32);
+        break;
+      case 'coins':
+        iconWidget = PixelIcons.coin(color: iconColor, size: 32);
+        break;
+      case 'map':
+        iconWidget = PixelIcons.map(color: iconColor, size: 32);
+        break;
+      case 'ship':
+        iconWidget = PixelIcons.ship(color: iconColor, size: 32);
+        break;
+      default:
+        iconWidget = PixelIcons.coin(color: iconColor, size: 32);
+    }
+    
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: PirateTheme.darkBrown,
+          width: 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 0,
+            spreadRadius: 1,
+            offset: const Offset(3, 3),
+          ),
+        ],
       ),
       child: Material(
         color: Colors.transparent,
@@ -348,40 +403,43 @@ class AchievementsScreen extends StatelessWidget {
           onTap: () {
             // Navigation would go here
           },
-          borderRadius: BorderRadius.circular(16),
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    icon,
-                    color: iconColor,
-                    size: 32,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  progress,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.black54,
-                  ),
-                ),
-              ],
+            child: AnimatedBuilder(
+              animation: _coinAnimation,
+              builder: (context, child) {
+                // Add a subtle floating animation to the icon
+                final yOffset = math.sin(_coinAnimation.value * math.pi * 2) * 3;
+                
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Transform.translate(
+                      offset: Offset(0, yOffset),
+                      child: SizedBox(
+                        width: 48,
+                        height: 48,
+                        child: iconWidget,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      title,
+                      style: PirateTheme.pixelTextBody.copyWith(
+                        color: PirateTheme.goldYellow,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      progress,
+                      style: PirateTheme.pixelTextSmall.copyWith(
+                        color: PirateTheme.sandBeige,
+                      ),
+                    ),
+                  ],
+                );
+              }
             ),
           ),
         ),
@@ -393,31 +451,55 @@ class AchievementsScreen extends StatelessWidget {
     BuildContext context,
     String title,
     String description,
-    IconData icon,
-    Color color,
+    String iconType,
+    Color iconColor,
     String points,
     DateTime earnedOn,
   ) {
+    Widget iconWidget;
+    
+    // Choose the appropriate pixel icon based on the iconType
+    switch (iconType) {
+      case 'treasures':
+        iconWidget = PixelIcons.treasureChest(color: iconColor, size: 32);
+        break;
+      case 'coins':
+        iconWidget = PixelIcons.coin(color: iconColor, size: 32);
+        break;
+      case 'map':
+        iconWidget = PixelIcons.map(color: iconColor, size: 32);
+        break;
+      case 'ship':
+        iconWidget = PixelIcons.ship(color: iconColor, size: 32);
+        break;
+      default:
+        iconWidget = PixelIcons.coin(color: iconColor, size: 32);
+    }
+    
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(12),
+        color: PirateTheme.woodBrown,
+        border: Border.all(
+          color: PirateTheme.darkBrown,
+          width: 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 0,
+            spreadRadius: 1,
+            offset: const Offset(3, 3),
+          ),
+        ],
       ),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              icon,
-              color: color,
-              size: 24,
-            ),
+          SizedBox(
+            width: 40,
+            height: 40,
+            child: iconWidget,
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -426,37 +508,42 @@ class AchievementsScreen extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+                  style: PirateTheme.pixelTextBody.copyWith(
+                    color: PirateTheme.goldYellow,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(
                   description,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: PirateTheme.pixelTextSmall.copyWith(
+                    color: PirateTheme.pixelWhite,
+                  ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(
-                  'Earned ${_formatDate(earnedOn)}',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey,
+                  'PLUNDERED ${_formatDate(earnedOn)}',
+                  style: PirateTheme.pixelTextSmall.copyWith(
+                    color: PirateTheme.sandBeige.withOpacity(0.7),
+                    fontSize: 6,
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(20),
+              color: PirateTheme.oceanDarkBlue.withOpacity(0.5),
+              border: Border.all(
+                color: PirateTheme.oceanBlue,
+                width: 1,
+              ),
             ),
             child: Text(
               points,
-              style: TextStyle(
-                color: color,
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
+              style: PirateTheme.pixelTextSmall.copyWith(
+                color: PirateTheme.goldYellow,
+                fontSize: 8,
               ),
             ),
           ),
@@ -470,11 +557,11 @@ class AchievementsScreen extends StatelessWidget {
     final difference = now.difference(date);
     
     if (difference.inDays == 0) {
-      return 'today';
+      return 'TODAY';
     } else if (difference.inDays == 1) {
-      return 'yesterday';
+      return 'YESTERDAY';
     } else if (difference.inDays < 7) {
-      return '${difference.inDays} days ago';
+      return '${difference.inDays} DAYS AGO';
     } else {
       return '${date.month}/${date.day}/${date.year}';
     }

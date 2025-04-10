@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../theme/pirate_theme.dart';
+import '../theme/pixel_icons.dart';
 
 class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
@@ -15,8 +17,8 @@ class CommunityScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Community'),
-        centerTitle: false,
+        title: const Text('CREW'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -28,68 +30,126 @@ class CommunityScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(16),
+                color: PirateTheme.oceanDarkBlue,
+                border: Border.all(
+                  color: PirateTheme.goldYellow,
+                  width: 2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 0,
+                    spreadRadius: 2,
+                    offset: const Offset(4, 4),
+                  ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Icon(
-                        Icons.video_call,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 28,
+                      SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: PixelIcons.parrot(
+                          color: PirateTheme.parrotGreen,
+                          size: 30,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        'Weekly Finance Meetups',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
+                        'WEEKLY CREW MEETUPS',
+                        style: PirateTheme.pixelTextHeadline.copyWith(
+                          color: PirateTheme.goldYellow,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
-                  const Text(
-                    'Join our community video calls every Monday at 8:00 PM EST for discussions on financial literacy, investment strategies, and Q&A sessions with financial experts.',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today,
-                        size: 18,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'Every Monday',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(width: 16),
-                      Icon(
-                        Icons.access_time,
-                        size: 18,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        '8:00 PM EST',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  const SizedBox(height: 16),
+                  Text(
+                    'JOIN YER FELLOW PIRATES EVERY MONDAY AT 8:00 PM EST FOR TALKS ON TREASURE HUNTING, INVESTMENT VOYAGES, AND Q&A WITH FINANCIAL BUCCANEERS.',
+                    style: PirateTheme.pixelTextBody.copyWith(
+                      color: PirateTheme.pixelWhite,
+                      fontSize: 10,
+                    ),
                   ),
                   const SizedBox(height: 16),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      // Add to calendar functionality would go here
-                    },
-                    icon: const Icon(Icons.add),
-                    label: const Text('Add to Calendar'),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: PirateTheme.woodBrown,
+                      border: Border.all(
+                        color: PirateTheme.darkBrown,
+                        width: 2,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: PixelIcons.map(
+                            color: PirateTheme.sandBeige,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'EVERY MONDAY',
+                          style: PirateTheme.pixelTextSmall.copyWith(
+                            color: PirateTheme.goldYellow,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: PixelIcons.coin(
+                            color: PirateTheme.sandBeige,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '8:00 PM EST',
+                          style: PirateTheme.pixelTextSmall.copyWith(
+                            color: PirateTheme.goldYellow,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Add to calendar functionality would go here
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: PirateTheme.woodBrown,
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: PirateTheme.darkBrown,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.add),
+                          const SizedBox(width: 8),
+                          Text(
+                            'ADD TO YER LOG',
+                            style: PirateTheme.pixelTextBody.copyWith(
+                              color: PirateTheme.goldYellow,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -102,51 +162,77 @@ class CommunityScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: const Color(0xFF5865F2).withOpacity(0.1), // Discord blue with opacity
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFF5865F2).withOpacity(0.3)),
+                color: PirateTheme.woodBrown,
+                border: Border.all(
+                  color: PirateTheme.darkBrown,
+                  width: 2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 0,
+                    spreadRadius: 2,
+                    offset: const Offset(4, 4),
+                  ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Image.network(
-                        'https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png',
-                        height: 30,
+                      SizedBox(
                         width: 30,
-                        errorBuilder: (context, error, stackTrace) => 
-                          const Icon(Icons.chat, size: 30, color: Color(0xFF5865F2)),
+                        height: 30,
+                        child: PixelIcons.ship(
+                          color: PirateTheme.goldYellow,
+                          size: 30,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        'Join our Discord',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
+                        'JOIN OUR FLEET',
+                        style: PirateTheme.pixelTextHeadline.copyWith(
+                          color: PirateTheme.goldYellow,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Connect with other millennials learning about finance, share tips, ask questions, and build your network. Our Discord community is active 24/7 with channels for different financial topics.',
-                    style: TextStyle(fontSize: 16),
+                  Text(
+                    'SAIL WITH OTHER PIRATES LEARNING ABOUT FINANCE, SHARE TREASURE MAPS, ASK QUESTIONS, AND BUILD YER CREW. OUR DISCORD FLEET IS ACTIVE 24/7 WITH CHANNELS FOR DIFFERENT TREASURE HUNTING TOPICS.',
+                    style: PirateTheme.pixelTextBody.copyWith(
+                      color: PirateTheme.pixelWhite,
+                      fontSize: 10,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton.icon(
+                    child: ElevatedButton(
                       onPressed: _launchDiscord,
-                      icon: const Icon(Icons.launch),
-                      label: const Text('Join Discord Server'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF5865F2), // Discord blue
-                        foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            color: Colors.black,
+                            width: 2,
+                          ),
                         ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.launch, color: Colors.white),
+                          const SizedBox(width: 8),
+                          Text(
+                            'JOIN DISCORD SERVER',
+                            style: PirateTheme.pixelTextBody.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -158,16 +244,16 @@ class CommunityScreen extends StatelessWidget {
             
             // Community Stats
             Text(
-              'Community Stats',
-              style: Theme.of(context).textTheme.titleLarge,
+              'CREW STATS',
+              style: PirateTheme.pixelTextHeadline,
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildStatCard(context, '2,500+', 'Members'),
-                _buildStatCard(context, '120+', 'Countries'),
-                _buildStatCard(context, '15+', 'Events Monthly'),
+                _buildStatCard(context, '2,500+', 'PIRATES'),
+                _buildStatCard(context, '120+', 'ISLANDS'),
+                _buildStatCard(context, '15+', 'VOYAGES MONTHLY'),
               ],
             ),
             
@@ -175,22 +261,22 @@ class CommunityScreen extends StatelessWidget {
             
             // Upcoming Events Preview
             Text(
-              'Upcoming Events',
-              style: Theme.of(context).textTheme.titleLarge,
+              'UPCOMING VOYAGES',
+              style: PirateTheme.pixelTextHeadline,
             ),
             const SizedBox(height: 16),
             _buildEventCard(
               context,
-              'Investing 101 Workshop',
-              'May 15, 2025 • 7:00 PM EST',
-              'Learn the basics of investing from certified financial planners.',
+              'TREASURE HUNTING 101',
+              'MAY 15, 2025 • 7:00 PM EST',
+              'Learn the basics of investing from certified financial buccaneers.',
             ),
             const SizedBox(height: 12),
             _buildEventCard(
               context,
-              'Debt Freedom Strategies',
-              'May 22, 2025 • 7:00 PM EST',
-              'Discover proven methods to eliminate debt and build wealth.',
+              'ESCAPE DEBT ISLAND',
+              'MAY 22, 2025 • 7:00 PM EST',
+              'Discover proven methods to eliminate debt and build your treasure chest.',
             ),
           ],
         ),
@@ -203,13 +289,17 @@ class CommunityScreen extends StatelessWidget {
       width: 100,
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(12),
+        color: PirateTheme.woodBrown,
+        border: Border.all(
+          color: PirateTheme.darkBrown,
+          width: 2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 0,
             spreadRadius: 1,
+            offset: const Offset(2, 2),
           ),
         ],
       ),
@@ -217,15 +307,17 @@ class CommunityScreen extends StatelessWidget {
         children: [
           Text(
             value,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
+            style: PirateTheme.pixelTextHeadline.copyWith(
+              color: PirateTheme.goldYellow,
+              fontSize: 14,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           Text(
             label,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: PirateTheme.pixelTextSmall.copyWith(
+              color: PirateTheme.sandBeige,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -237,32 +329,64 @@ class CommunityScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(12),
+        color: PirateTheme.woodBrown.withOpacity(0.7),
+        border: Border.all(
+          color: PirateTheme.darkBrown,
+          width: 2,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            date,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary,
-              fontWeight: FontWeight.w500,
+            style: PirateTheme.pixelTextBody.copyWith(
+              color: PirateTheme.goldYellow,
             ),
           ),
           const SizedBox(height: 8),
-          Text(description),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: PirateTheme.oceanDarkBlue.withOpacity(0.5),
+              border: Border.all(
+                color: PirateTheme.oceanBlue,
+                width: 1,
+              ),
+            ),
+            child: Text(
+              date,
+              style: PirateTheme.pixelTextSmall.copyWith(
+                color: PirateTheme.sandBeige,
+              ),
+            ),
+          ),
           const SizedBox(height: 12),
-          TextButton(
-            onPressed: () {},
-            child: const Text('Learn More'),
+          Text(
+            description,
+            style: PirateTheme.pixelTextSmall.copyWith(
+              color: PirateTheme.pixelWhite,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: PirateTheme.oceanDarkBlue,
+                border: Border.all(
+                  color: PirateTheme.oceanBlue,
+                  width: 1,
+                ),
+              ),
+              child: Text(
+                'VIEW MAP',
+                style: PirateTheme.pixelTextSmall.copyWith(
+                  color: PirateTheme.goldYellow,
+                ),
+              ),
+            ),
           ),
         ],
       ),
