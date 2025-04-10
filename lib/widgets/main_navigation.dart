@@ -1,3 +1,4 @@
+// widgets/main_navigation.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,11 +28,11 @@ class MainNavigation extends ConsumerWidget {
       backgroundColor: PirateTheme.oceanDarkBlue,
       appBar: AppBar(
         title: Text(
-          'TREASURE FINANCE',
+          "90's BABY PIRATE CREW",
           style: GoogleFonts.pressStart2p(
             textStyle: TextStyle(
               color: PirateTheme.goldYellow,
-              fontSize: 16,
+              fontSize: 14, // Slightly smaller to fit the longer title
               letterSpacing: -1,
               shadows: [
                 Shadow(
@@ -47,7 +48,7 @@ class MainNavigation extends ConsumerWidget {
         centerTitle: true,
         elevation: 4,
       ),
-      
+
       // Captain's dialogue section
       body: Column(
         children: [
@@ -58,10 +59,7 @@ class MainNavigation extends ConsumerWidget {
             decoration: BoxDecoration(
               color: PirateTheme.woodBrown.withOpacity(0.7),
               border: Border(
-                bottom: BorderSide(
-                  color: PirateTheme.darkBrown,
-                  width: 2,
-                ),
+                bottom: BorderSide(color: PirateTheme.darkBrown, width: 2),
               ),
             ),
             child: Row(
@@ -72,19 +70,11 @@ class MainNavigation extends ConsumerWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: PirateTheme.darkBrown,
-                      width: 2,
-                    ),
+                    border: Border.all(color: PirateTheme.darkBrown, width: 2),
                     borderRadius: BorderRadius.circular(0),
                   ),
                   child: Center(
-                    child: Text(
-                      '👨‍✈️',
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
+                    child: Text('👨‍✈️', style: const TextStyle(fontSize: 20)),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -121,15 +111,12 @@ class MainNavigation extends ConsumerWidget {
               ],
             ),
           ),
-          
+
           // Main content
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: PirateTheme.darkBrown,
-                  width: 2,
-                ),
+                border: Border.all(color: PirateTheme.darkBrown, width: 2),
                 color: PirateTheme.oceanDarkBlue,
               ),
               margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -138,10 +125,10 @@ class MainNavigation extends ConsumerWidget {
           ),
         ],
       ),
-      
+
       // Custom bottom navigation designed like a ship's deck
       bottomNavigationBar: Container(
-        height: 70,
+        height: 90,
         decoration: BoxDecoration(
           color: PirateTheme.woodBrown,
           boxShadow: [
@@ -152,70 +139,73 @@ class MainNavigation extends ConsumerWidget {
             ),
           ],
           border: Border(
-            top: BorderSide(
-              color: PirateTheme.darkBrown,
-              width: 3,
-            ),
+            top: BorderSide(color: PirateTheme.darkBrown, width: 3),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(
-              context, 
-              'VOYAGE', 
-              0, 
-              selectedTab, 
-              ref,
-              PixelIcons.ship(
-                color: selectedTab == 0 
-                    ? PirateTheme.goldYellow 
-                    : PirateTheme.sandBeige.withOpacity(0.6),
-                size: 28,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildNavItem(
+                context,
+                'VOYAGE',
+                0,
+                selectedTab,
+                ref,
+                PixelIcons.ship(
+                  color:
+                      selectedTab == 0
+                          ? PirateTheme.goldYellow
+                          : PirateTheme.sandBeige.withOpacity(0.6),
+                  size: 28,
+                ),
               ),
-            ),
-            _buildNavItem(
-              context, 
-              'TREASURE', 
-              1, 
-              selectedTab, 
-              ref,
-              PixelIcons.treasureChest(
-                color: selectedTab == 1 
-                    ? PirateTheme.goldYellow 
-                    : PirateTheme.sandBeige.withOpacity(0.6),
-                size: 28,
+              _buildNavItem(
+                context,
+                'TREASURE',
+                1,
+                selectedTab,
+                ref,
+                PixelIcons.treasureChest(
+                  color:
+                      selectedTab == 1
+                          ? PirateTheme.goldYellow
+                          : PirateTheme.sandBeige.withOpacity(0.6),
+                  size: 28,
+                ),
               ),
-            ),
-            _buildNavItem(
-              context, 
-              'CREW', 
-              2, 
-              selectedTab, 
-              ref,
-              PixelIcons.parrot(
-                color: selectedTab == 2 
-                    ? null // Use default parrot colors
-                    : PirateTheme.sandBeige.withOpacity(0.6),
-                size: 28,
+              _buildNavItem(
+                context,
+                'CREW',
+                2,
+                selectedTab,
+                ref,
+                PixelIcons.parrot(
+                  color:
+                      selectedTab == 2
+                          ? null // Use default parrot colors
+                          : PirateTheme.sandBeige.withOpacity(0.6),
+                  size: 28,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
-  
+
   Widget _buildNavItem(
-    BuildContext context, 
-    String label, 
-    int index, 
-    int selectedTab, 
+    BuildContext context,
+    String label,
+    int index,
+    int selectedTab,
     WidgetRef ref,
     Widget icon,
   ) {
     final isSelected = selectedTab == index;
-    
+
     return InkWell(
       onTap: () {
         ref.read(selectedTabProvider.notifier).state = index;
@@ -223,32 +213,25 @@ class MainNavigation extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          border: isSelected 
-              ? Border.all(
-                  color: PirateTheme.goldYellow,
-                  width: 2,
-                ) 
-              : null,
-          color: isSelected 
-              ? PirateTheme.darkBrown
-              : null,
+          border:
+              isSelected
+                  ? Border.all(color: PirateTheme.goldYellow, width: 2)
+                  : null,
+          color: isSelected ? PirateTheme.darkBrown : null,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              height: 30,
-              width: 30,
-              child: icon,
-            ),
+            SizedBox(height: 30, width: 30, child: icon),
             const SizedBox(height: 4),
             Text(
               label,
               style: GoogleFonts.pressStart2p(
                 textStyle: TextStyle(
-                  color: isSelected 
-                      ? PirateTheme.goldYellow 
-                      : PirateTheme.sandBeige.withOpacity(0.7),
+                  color:
+                      isSelected
+                          ? PirateTheme.goldYellow
+                          : PirateTheme.sandBeige.withOpacity(0.7),
                   fontSize: 8,
                   letterSpacing: -0.5,
                 ),

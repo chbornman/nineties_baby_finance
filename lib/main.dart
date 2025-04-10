@@ -1,3 +1,4 @@
+// main.dart
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -35,16 +36,16 @@ Future<void> main() async {
   // Allow Google Fonts to fetch Press Start 2P font from the web
   GoogleFonts.config.allowRuntimeFetching = true;
 
-  runApp(const ProviderScope(child: TreasureFinanceApp()));
+  runApp(const ProviderScope(child: NinetiesBabyPirateApp()));
 }
 
-class TreasureFinanceApp extends StatelessWidget {
-  const TreasureFinanceApp({super.key});
+class NinetiesBabyPirateApp extends StatelessWidget {
+  const NinetiesBabyPirateApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Treasure Finance',
+      title: "90's Baby Pirate Crew",
       debugShowCheckedModeBanner: false,
       theme: PirateTheme.themeData,
       themeMode:
@@ -151,12 +152,12 @@ class LoadingScreenState extends State<LoadingScreen>
                 children: [
                   const SizedBox(height: 20),
                   Text(
-                    'TREASURE',
+                    "90's BABY",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.pressStart2p(
                       textStyle: TextStyle(
                         color: PirateTheme.goldYellow,
-                        fontSize: 28,
+                        fontSize: 24,
                         letterSpacing: -1,
                         height: 1.2,
                         shadows: [
@@ -170,12 +171,12 @@ class LoadingScreenState extends State<LoadingScreen>
                     ),
                   ),
                   Text(
-                    'FINANCE',
+                    'PIRATE CREW',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.pressStart2p(
                       textStyle: TextStyle(
                         color: PirateTheme.goldYellow,
-                        fontSize: 28,
+                        fontSize: 24,
                         letterSpacing: -1,
                         height: 1.2,
                         shadows: [
@@ -190,7 +191,7 @@ class LoadingScreenState extends State<LoadingScreen>
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Chart Yer Course to Riches',
+                    'Finance Your High Seas Adventures',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.pressStart2p(
                       textStyle: TextStyle(
@@ -316,7 +317,7 @@ class LoadingScreenState extends State<LoadingScreen>
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
 
                   // Loading message
                   Text(
@@ -339,19 +340,7 @@ class LoadingScreenState extends State<LoadingScreen>
                     ),
                   ),
 
-                  const SizedBox(height: 30),
-
-                  Text(
-                    'Press ENTER to set sail',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.pressStart2p(
-                      textStyle: TextStyle(
-                        color: PirateTheme.goldYellow,
-                        fontSize: 10,
-                        letterSpacing: -1,
-                      ),
-                    ),
-                  ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
