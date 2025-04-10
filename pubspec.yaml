@@ -37,6 +37,7 @@ dependencies:
   flutter_riverpod: ^2.6.1
   supabase_flutter: ^2.8.4
   clerk_flutter: ^0.0.8-beta
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
